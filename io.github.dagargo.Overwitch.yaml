@@ -1,0 +1,27 @@
+id: io.github.dagargo.Overwitch
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
+command: overwitch
+
+finish-args:
+  - --filesystem=xdg-run/pipewire-0
+  - --filesystem=~/.config/overwitch
+  - --persist=~/.config/overwitch
+  - --device=all
+  - --socket=wayland
+  - --socket=fallback-x11
+
+modules:
+  - shared-modules/libusb/libusb.json
+
+  - name: overwitch
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/dagargo/overwitch.git
+        tag: "1.2"
+        commit: 4be4e55392fe15716521965ca7a2dc8898e8d392
+      - type: shell
+        commands:
+          - autoreconf --install
